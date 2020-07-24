@@ -39,7 +39,9 @@ INSTALLED_APPS = [
 'django.contrib.staticfiles',
 'rest_framework',
 'rest_framework.authtoken',
+'django_rest_passwordreset',
 'api',
+
 ]
 
 
@@ -58,7 +60,7 @@ ROOT_URLCONF = 'DNA.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates'),],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -71,8 +73,10 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'DNA.wsgi.application'
 
+
+WSGI_APPLICATION = 'DNA.wsgi.application'
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

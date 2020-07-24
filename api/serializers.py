@@ -38,3 +38,7 @@ class EditProfileSerilizer(serializers.ModelSerializer):
         # Return optional Profile fields.
         model = Profile
         fields = ('id', 'facebook_user', 'phone', 'profile',)
+class RecoverySerializers(serializers.ModelSerializer):
+    
+    class Meta:
+        model = User

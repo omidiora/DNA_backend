@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from rest_framework.decorators import action
 from rest_framework.authentication import TokenAuthentication
 from .models import Profile
-from .serializers import   UserRegistrationSerializers, ProfileSerializer, EditProfileSerilizer
+from .serializers import   UserRegistrationSerializers, ProfileSerializer, EditProfileSerilizer, RecoverySerializers
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 # from rest_framework.parsers import FileUploadParser
@@ -19,25 +19,44 @@ class UserViewSet(viewsets.ModelViewSet):
     versions =['v1', 'v2','v3']
     # update - default method should be restricted
     # pylint: disable=R0201
-    def update(self, request, *args, **kwargs ):
-        response = {'message': 'You cant Update your Profile like that'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    # def update(self, request, *args, **kwargs ):
+    #     response = {'message': 'You cant Update your Profile like that'}
+    #     return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    # destroy - IsAuthenticated an isSelf
-    # pylint: disable=R0201
-    def destroy(self, request,  *args, **kwargs):
-        response = {'message': 'You cant delete Profile like this'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    # # destroy - IsAuthenticated an isSelf
+    # # pylint: disable=R0201
+    # def destroy(self, request,  *args, **kwargs):
+    #     response = {'message': 'You cant delete Profile like this'}
+    #     return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
-    # retrieve - default method for all should be restricted,
-    # pylint: disable=R0201
-    def list(self, request, *args, **kwargs):
-        response = {'message': 'You cant  list or retrieve users Profile like this'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
-    # pylint: disable=R0201
-    def retrieve(self, request, pk=None, *args, **kwargs):
-        response = {'message': 'You cant  list or retrieve users Profile like this'}
-        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    # # retrieve - default method for all should be restricted,
+    # # pylint: disable=R0201
+    # def list(self, request, *args, **kwargs):
+    #     response = {'message': 'You cant  list or retrieve users Profile like this'}
+    #     return Response(response, status=status.HTTP_400_BAD_REQUEST)
+    # # pylint: disable=R0201
+    # def retrieve(self, request, pk=None, *args, **kwargs):
+    #     response = {'message': 'You cant  list or retrieve users Profile like this'}
+    #     return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+    # @action(detail=True, methods=['POST'])
+    # def forgot_password(self, request, version="v1"):
+    #     # check if the version argument exists in the versions list
+    #     if version in self.versions:
+    #         if request.data :
+    #             fetched_data =  request.data
+    #             try:
+    #                 user = User.objects.get(email= fetched_data)
+    #                 response = {'message': user}
+    #                 return Response(response, status=status.HTTP_200_OK)
+
+    #             except IndexError:
+    #                 response = {'message': 'user profile associated with this email not found.'}
+    #                 return Response(response, status=status.HTTP_404_BAD_REQUEST)
+
+    #     else:
+    #         response = {'message': 'API version not identified!'}
+    #         return Response(response, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProfileViewSet(viewsets.ModelViewSet):
@@ -112,7 +131,12 @@ class ProfileViewSet(viewsets.ModelViewSet):
 
                 except IndexError :
                     response = {'message': 'user profile does not exit'}
-                    return Response(response, status=status.HTTP_200_OK)
+                    return Response(response, status=status.HTTP_404_OK)
         else:
             response = {'message': 'API version not identified!'}
             return Response(response, status=status.HTTP_400_BAD_REQUEST)
+
+
+   
+
+   
